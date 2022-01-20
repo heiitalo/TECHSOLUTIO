@@ -4,39 +4,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
-
-
-
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "produtos")
+@Table(name = "tb_produtos")
 public class Produtos {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@NotNull
 	private String produto;
-	
-	@NotNull
-	private String fornecedor;
-	
-	@NotNull 
-	double valor;
-	
-	
 
-	public String getFornecedor() {
+	
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Fornecedor fornecedor;
+
+	@NotNull
+	double valor;
+
+	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
 
-	public void setFornecedor(String fornecedor) {
+	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
 
@@ -63,9 +60,5 @@ public class Produtos {
 	public void setProduto(String produto) {
 		this.produto = produto;
 	}
-
-	
-
-
 
 }
